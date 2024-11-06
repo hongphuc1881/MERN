@@ -15,13 +15,19 @@ const AdminRoute = () => {
 
 const RequireLoginRoute = () => {
   const { isLogin } = useLoginState();
-  return isLogin ? <Outlet /> : <Navigate to={'/'} />;
+  return isLogin ? <Outlet /> : <Navigate to={'/login'} />;
+};
+
+const RejectedRoute = () => {
+  const { isLogin } = useLoginState();
+  return !isLogin ? <Outlet /> : <Navigate to={'/'} />;
 };
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
     {
       path: '/',
+      index: true,
       element: (
         <MainLayout>
           <Home />
@@ -29,12 +35,18 @@ export default function useRouteElements() {
       ),
     },
     {
-      path: '/register',
-      element: <Register />,
-    },
-    {
-      path: '/login',
-      element: <Login />,
+      path: '',
+      element: <RejectedRoute />,
+      children: [
+        {
+          path: '/register',
+          element: <Register />,
+        },
+        {
+          path: '/login',
+          element: <Login />,
+        },
+      ],
     },
     {
       path: '',

@@ -27,10 +27,10 @@ export default function HeaderPc() {
           ></button>
         </div>
         {isLogin ? (
-          <div className={styles.profile}>
+          <Link to={'/profile'} className={styles.profile}>
             <img src={UserImage} alt="" width={30} />
             <span> Profile</span>
-          </div>
+          </Link>
         ) : (
           <div className={styles.btnGroup}>
             <Button
