@@ -22,9 +22,9 @@ export const MenuButton = () => {
       ></div>
       <div className={clsx(styles.menu, isShowMenu && styles.isOpenMenu)}>
         {isLogin && (
-          <div className={styles.userInfo}>
+          <Link to="/profile" className={styles.userInfo}>
             <span>userName</span>
-          </div>
+          </Link>
         )}
         <div className={styles.content}>
           <nav>

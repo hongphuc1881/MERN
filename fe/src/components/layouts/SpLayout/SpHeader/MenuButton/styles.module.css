@@ -55,6 +55,7 @@
 
 .userInfo {
   border-bottom: 1px solid var(--Neutral-300);
+  display: block;
   padding: 16px;
 }
 
