@@ -1,5 +1,6 @@
 import useRouteElements from './hooks/useRouteElements';
 import { LoginStateProvider } from './providers/LoginStateProvider';
+import { ProfileStateProvider } from './providers/ProfileProvider';
 
 function App() {
   const routeElements = useRouteElements();
@@ -8,7 +9,13 @@ function App() {
       <LoginStateProvider
         loginState={{ isLogin: !!localStorage.getItem('token') }}
       >
-        {routeElements}
+        <ProfileStateProvider
+          profileState={{
+            role: 'user',
+          }}
+        >
+          {routeElements}
+        </ProfileStateProvider>
       </LoginStateProvider>
     </div>
   );
