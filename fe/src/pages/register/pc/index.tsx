@@ -1,18 +1,49 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import { omit } from 'lodash';
 import { useForm } from 'react-hook-form';
+import { registerAccount } from '../../../api/auth.api';
 import { Button } from '../../../components/Button';
+import { ResponseApi } from '../../../types/utils.type';
 import { rules, schema, Schema } from '../../../utils/rule';
+import { isAxiosUnprocessableEntityError } from '../../../utils/utils';
 import styles from './styles.module.css';
 export const RegisterPc = () => {
+  const registerAccountMutation = useMutation({
+    mutationFn: (body: Omit<Schema, 'confirmPassword'>) =>
+      registerAccount(body),
+  });
+
   const {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<Schema>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    const body = omit(data, ['confirmPassword']);
+    registerAccountMutation.mutate(body, {
+      onSuccess(data) {
+        console.log(data);
+      },
+      onError(error) {
+        console.log(error);
+        if (
+          isAxiosUnprocessableEntityError<
+            ResponseApi<Omit<Schema, 'confirmPassword'>>
+          >(error)
+        ) {
+          console.log(error);
+
+          const formError = error.response?.data.data;
+          if (formError?.email) {
+            setError('email', { message: formError.email });
+          }
+        }
+      },
+    });
   });
 
   return (
@@ -32,7 +63,7 @@ export const RegisterPc = () => {
           <label htmlFor="username">Tên đăng nhập: </label>
           <input
             type="text"
-            {...register('username', rules.password)}
+            {...register('username', rules.username)}
             id="username"
             placeholder="Nhập tên đăng nhập"
           />

@@ -11,7 +11,7 @@ function App() {
       >
         <ProfileStateProvider
           profileState={{
-            role: 'admin',
+            role: 'user',
           }}
         >
           {routeElements}
