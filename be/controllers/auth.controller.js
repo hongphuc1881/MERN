@@ -1,11 +1,8 @@
-const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const router = express.Router();
 
-// Đăng ký
-router.post('/register', async (req, res) => {
+exports.register = async (req, res) => {
     const { username, email, password, fullName, role, gender } = req.body;
     console.log('body, ', req.body);
 
@@ -48,10 +45,9 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Đã có lỗi xảy ra' });
     }
-});
+};
 
-// Đăng nhập
-router.post('/login', async (req, res) => {
+exports.login = async (req, res) => {
     const { email, password } = req.body;
     console.log('login ', req.body);
 
@@ -94,11 +90,10 @@ router.post('/login', async (req, res) => {
         console.log(error);
         res.status(500).json({ message: 'Đã có lỗi xảy ra' });
     }
-});
+};
 
-router.post('/logout', (req, res) => {
+exports.logout = (req, res) => {
     res.status(200).json({
         message: 'Đăng xuất thành công',
     });
-});
-module.exports = router;
+};
