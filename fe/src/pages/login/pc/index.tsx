@@ -1,13 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { loginAccount } from '../../../api/auth.api';
 import { Button } from '../../../components/Button';
-import { ResponseApi } from '../../../types/utils.type';
+import { ErrorResponseApi } from '../../../types/utils.type';
 import { schema, Schema } from '../../../utils/rule';
 import { isAxiosUnprocessableEntityError } from '../../../utils/utils';
 import styles from './styles.module.css';
 export const LoginPc = () => {
+  const navigate = useNavigate();
   const loginMutation = useMutation({
     mutationFn: (body: Pick<Schema, 'email' | 'password'>) =>
       loginAccount(body),
@@ -24,11 +26,11 @@ export const LoginPc = () => {
 
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
-      onSuccess(data) {
-        console.log(data);
+      onSuccess() {
+        navigate('/');
       },
       onError(error) {
-        if (isAxiosUnprocessableEntityError<ResponseApi<Schema>>(error)) {
+        if (isAxiosUnprocessableEntityError<ErrorResponseApi<Schema>>(error)) {
           const formError = error.response?.data.data;
           if (formError?.email) {
             setError('email', { message: formError.email });

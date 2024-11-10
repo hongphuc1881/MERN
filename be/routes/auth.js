@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '90d' });
-        res.status(300).json({
+        res.status(200).json({
             message: 'Đăng nhập thành công',
             data: {
                 user: {
@@ -96,4 +96,9 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.post('/logout', (req, res) => {
+    res.status(200).json({
+        message: 'Đăng xuất thành công',
+    });
+});
 module.exports = router;

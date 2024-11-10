@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import { useForm } from 'react-hook-form';
 import { registerAccount } from '../../../api/auth.api';
 import { Button } from '../../../components/Button';
-import { ResponseApi } from '../../../types/utils.type';
+import { ErrorResponseApi } from '../../../types/utils.type';
 import { rules, schema, Schema } from '../../../utils/rule';
 import { isAxiosUnprocessableEntityError } from '../../../utils/utils';
 import styles from './styles.module.css';
@@ -32,7 +32,7 @@ export const RegisterPc = () => {
         console.log(error);
         if (
           isAxiosUnprocessableEntityError<
-            ResponseApi<Omit<Schema, 'confirmPassword'>>
+            ErrorResponseApi<Omit<Schema, 'confirmPassword'>>
           >(error)
         ) {
           console.log(error);
