@@ -1,4 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../../../../api/auth.api';
 import { useLoginState } from '../../../../providers/LoginStateProvider';
 import { Button } from '../../../Button';
 import { NavList } from '../../variables';
@@ -9,10 +11,22 @@ import styles from './styles.module.css';
 export default function HeaderPc() {
   const { isLogin } = useLoginState();
   const navigate = useNavigate();
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      navigate('/');
+    },
+  });
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
   return (
     <header className={styles.module}>
       <div className={styles.top}>
-        <img src={Logo} alt="Pstore" width={130} />
+        <Link to={'/'}>
+          <img src={Logo} alt="Pstore" width={130} />
+        </Link>
         <div className={styles.textBoxSearch}>
           <input
             type="text"
@@ -27,10 +41,13 @@ export default function HeaderPc() {
           ></button>
         </div>
         {isLogin ? (
-          <Link to={'/profile'} className={styles.profile}>
-            <img src={UserImage} alt="" width={30} />
-            <span> Profile</span>
-          </Link>
+          <div>
+            <Link to={'/profile'} className={styles.profile}>
+              <img src={UserImage} alt="" width={30} />
+              <span> Profile</span>
+            </Link>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
         ) : (
           <div className={styles.btnGroup}>
             <Button
