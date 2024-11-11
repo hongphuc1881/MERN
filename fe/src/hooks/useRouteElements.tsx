@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import MainLayout from '../components/layouts';
+import internalPath from '../constants/path';
 import Admin from '../pages/admin';
 import Home from '../pages/home';
 import Login from '../pages/login';
@@ -10,23 +11,23 @@ import { useProfileState } from '../providers/ProfileProvider';
 
 const AdminRoute = () => {
   const { role } = useProfileState();
-  return role == 'admin' ? <Outlet /> : <Navigate to={'/'} />;
+  return role == 'admin' ? <Outlet /> : <Navigate to={internalPath.home} />;
 };
 
 const RequireLoginRoute = () => {
   const { isLogin } = useLoginState();
-  return isLogin ? <Outlet /> : <Navigate to={'/login'} />;
+  return isLogin ? <Outlet /> : <Navigate to={internalPath.login} />;
 };
 
 const RejectedRoute = () => {
   const { isLogin } = useLoginState();
-  return !isLogin ? <Outlet /> : <Navigate to={'/'} />;
+  return !isLogin ? <Outlet /> : <Navigate to={internalPath.home} />;
 };
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
     {
-      path: '/',
+      path: internalPath.home,
       index: true,
       element: (
         <MainLayout>
@@ -39,11 +40,11 @@ export default function useRouteElements() {
       element: <RejectedRoute />,
       children: [
         {
-          path: '/register',
+          path: internalPath.register,
           element: <Register />,
         },
         {
-          path: '/login',
+          path: internalPath.login,
           element: <Login />,
         },
       ],
@@ -57,7 +58,7 @@ export default function useRouteElements() {
       ),
       children: [
         {
-          path: '/profile',
+          path: internalPath.profile,
           element: <Profile />,
         },
       ],

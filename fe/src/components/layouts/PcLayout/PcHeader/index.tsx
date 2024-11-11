@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../../../api/auth.api';
+import internalPath from '../../../../constants/path';
 import { useLoginState } from '../../../../providers/LoginStateProvider';
 import { Button } from '../../../Button';
 import { NavList } from '../../variables';
@@ -54,7 +55,7 @@ export default function HeaderPc() {
               size="middle"
               theme="normal"
               onClick={() => {
-                navigate('/register');
+                navigate(internalPath.register);
               }}
             >
               Register
@@ -63,7 +64,7 @@ export default function HeaderPc() {
               size="middle"
               theme="primary"
               onClick={() => {
-                navigate('/login');
+                navigate(internalPath.login);
               }}
             >
               Login
