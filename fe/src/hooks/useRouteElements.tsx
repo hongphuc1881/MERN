@@ -37,7 +37,11 @@ export default function useRouteElements() {
     },
     {
       path: '',
-      element: <RejectedRoute />,
+      element: (
+        <MainLayout>
+          <RejectedRoute />
+        </MainLayout>
+      ),
       children: [
         {
           path: internalPath.register,

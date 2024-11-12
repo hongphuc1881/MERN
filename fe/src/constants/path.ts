@@ -1,7 +1,7 @@
 const internalPath = {
   home: '/',
   login: '/login',
-  register: '/',
+  register: '/register',
   logout: '/logout',
   profile: '/profile',
 };

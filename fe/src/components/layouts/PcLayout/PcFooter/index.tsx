@@ -1,3 +1,3 @@
 export default function FooterPc() {
-  return <div>FooterPc</div>;
+  return <footer>FooterPc</footer>;
 }

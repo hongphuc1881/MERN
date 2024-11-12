@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginState } from '../../../../../providers/LoginStateProvider';
 import { Button } from '../../../../Button';
 import { NavList } from '../../../variables';
@@ -8,6 +8,7 @@ import useMenuButton from './useMenuButton';
 export const MenuButton = () => {
   const { isShowMenu, onToggleMenu } = useMenuButton();
   const { isLogin } = useLoginState();
+  const navigate = useNavigate();
   return (
     <>
       <button
@@ -30,7 +31,7 @@ export const MenuButton = () => {
           <nav>
             <ul className={styles.menuList}>
               {NavList.map((item) => (
-                <li>
+                <li key={item.label}>
                   <Link to={item.url}>{item.label}</Link>
                 </li>
               ))}
@@ -39,10 +40,22 @@ export const MenuButton = () => {
 
           {!isLogin && (
             <div className={styles.btnGroup}>
-              <Button size="middle" theme="normal">
+              <Button
+                size="middle"
+                theme="normal"
+                onClick={() => {
+                  navigate('/register');
+                }}
+              >
                 Đăng ký
               </Button>
-              <Button size="middle" theme="primary">
+              <Button
+                size="middle"
+                theme="primary"
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
                 Đăng nhập
               </Button>
             </div>
