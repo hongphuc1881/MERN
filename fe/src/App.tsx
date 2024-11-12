@@ -6,7 +6,7 @@ import { getTokenFromLS } from './utils/auth';
 function App() {
   const routeElements = useRouteElements();
   return (
-    <div>
+    <>
       <LoginStateProvider loginState={{ isLogin: Boolean(getTokenFromLS()) }}>
         <ProfileStateProvider
           profileState={{
@@ -16,7 +16,7 @@ function App() {
           {routeElements}
         </ProfileStateProvider>
       </LoginStateProvider>
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../../../api/auth.api';
+import internalPath from '../../../../constants/path';
 import { useLoginState } from '../../../../providers/LoginStateProvider';
 import { Button } from '../../../Button';
 import { NavList } from '../../variables';
@@ -41,12 +42,34 @@ export default function HeaderPc() {
           ></button>
         </div>
         {isLogin ? (
-          <div>
+          <div className={styles.profileWrapper}>
             <Link to={'/profile'} className={styles.profile}>
               <img src={UserImage} alt="" width={30} />
               <span> Profile</span>
             </Link>
-            <button onClick={handleLogout}>Logout</button>
+            <ul className={styles.popover}>
+              <li>
+                <Link className={styles.popoverLink} to={''}>
+                  Tài khoản của tôi
+                </Link>
+              </li>
+              <li>
+                <Link className={styles.popoverLink} to={''}>
+                  Đơn mua
+                </Link>
+              </li>
+
+              <li>
+                <Button
+                  className={styles.logoutBtn}
+                  size="middle"
+                  theme="primary"
+                  onClick={handleLogout}
+                >
+                  Đăng xuất
+                </Button>
+              </li>
+            </ul>
           </div>
         ) : (
           <div className={styles.btnGroup}>
@@ -54,7 +77,7 @@ export default function HeaderPc() {
               size="middle"
               theme="normal"
               onClick={() => {
-                navigate('/register');
+                navigate(internalPath.register);
               }}
             >
               Register
@@ -63,7 +86,7 @@ export default function HeaderPc() {
               size="middle"
               theme="primary"
               onClick={() => {
-                navigate('/login');
+                navigate(internalPath.login);
               }}
             >
               Login
